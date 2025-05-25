@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='fonts/montserrat/fonts.css')}}"
+    />
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <button class="control-sidebar"></button>
+        <div class="history"></div>
+      </aside>
+      <div class="main-area" ondrop="dropHandler(event);">
+        <div class="common-question"></div>
+        <form id="uploadForm" enctype="multipart/form-data">
+          <div>
+            <input
+              type="text"
+              name="userPrompt"
+              id="userPrompt"
+              placeholder="Describe your bundle..."
+              required
+            />
+          </div>
+          <button type="submit">Generate</button>
+          <input
+            type="file"
+            name="dataFile"
+            id="dataFile"
+            accept=".xlsx,.csv,.pdf,.docx, .txt"
+          />
+        </form>
+        <div class="bundle-wrapper">
+          <div class="bundle"></div>
+          <div class="bundle-product-info">
+            <canvas id="bundle-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/menu.js')}}"></script>
+  </body>
+</html>
