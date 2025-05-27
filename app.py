@@ -97,6 +97,7 @@ try:
     )
     app.logger.info(f"ChromaDB collection '{CHROMA_COLLECTION_NAME}' loaded/created.")
 
+
     valid_models = ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"]
     model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
@@ -104,7 +105,8 @@ try:
         raise ValueError(f"Invalid model name: {model_name}. Must be one of {valid_models}")
     
     app.logger.info(f"Using OpenAI model: {model_name}")
-    
+
+    model = ChatOpenAI(temperature=0, model_name=model_name)
     prompt = PromptTemplate.from_template("""
     You are a data bot that creates bundle-ready JSON.
     Your goal is to help ecommerce managers create appealing bundles and price them effectively in euros (€) for a European context.
@@ -297,7 +299,7 @@ def ensure_data_is_ingested(file_path=DEFAULT_DATA_FILE_PATH, force_reingest=Fal
 # --- Flask Routes ---
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html")  
 
 @app.route("/generate", methods=["POST"])
 def generate_bundle_route():
