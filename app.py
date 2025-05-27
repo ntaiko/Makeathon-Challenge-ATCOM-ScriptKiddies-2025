@@ -97,7 +97,14 @@ try:
     )
     app.logger.info(f"ChromaDB collection '{CHROMA_COLLECTION_NAME}' loaded/created.")
 
-    model = ChatOpenAI(temperature=0, model_name="gpt-4.1")
+    valid_models = ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"]
+    model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+
+    if model_name not in valid_models:
+        raise ValueError(f"Invalid model name: {model_name}. Must be one of {valid_models}")
+    
+    app.logger.info(f"Using OpenAI model: {model_name}")
+    
     prompt = PromptTemplate.from_template("""
     You are a data bot that creates bundle-ready JSON.
     Your goal is to help ecommerce managers create appealing bundles and price them effectively in euros (€) for a European context.
